@@ -29,7 +29,9 @@ $on-palm:          600px;
 $on-laptop:        800px;
 
 
-
+img {
+  max-width: 100%;
+}
 // Use media queries like this:
 // @include media-query($on-palm) {
 //     .wrapper {
@@ -52,6 +54,4 @@ $on-laptop:        800px;
         "syntax-highlighting"
 ;
 
-img {
-  max-width: 100%;
-}
+
