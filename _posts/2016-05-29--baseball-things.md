@@ -2,16 +2,16 @@
 layout: post
 title:  "Baseball Analysis"
 date:   2016-05-28 22:28:01 -0500
-categories: jekyll update
+categories: baseball
 ---
 
 
-#Overview
+### Overview
 
-"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
 
 
-#Data Summary
+### Data Summary
 
 I use the Lahman R package to access the Lahman database, pulling player-year level batting statistics from "Batting." The Lahman package also automatically computes several statistics for us such as batting average, on-base percentage, and slugging percentage that are missing from the main data set. Strangely, it is missing a field for singles, so we need to construct that on our own. I also filter to NL/AL batters with at least one plate appearance.
 
@@ -76,7 +76,7 @@ bstats <- left_join(bstats,league_leaders, by = "yearID")
 ggplot(iso_league_leaders,aes(x= yearID,y = iso_leader_iso,label = iso_leader)) + geom_text()
 ```
 
-![plot of chunk unnamed-chunk-3](/figure/source/2016-05-29--baseball-things/unnamed-chunk-3-1.png) 
+![plot of chunk fig.width==10](/figure/source/2016-05-29--baseball-things/fig.width==10-1.png) 
 
 
 Include in stdev everyone with at least 200 at bats
@@ -106,7 +106,7 @@ ggplot(yearly_bstats,aes(x = yearID,y = ba_avg)) + geom_line() + theme_wsj() + s
                               '.280','.290','.300','.310'))
 ```
 
-![plot of chunk unnamed-chunk-5](/figure/source/2016-05-29--baseball-things/unnamed-chunk-5-1.png) 
+![plot of chunk unnamed-chunk-4](/figure/source/2016-05-29--baseball-things/unnamed-chunk-4-1.png) 
 
 ```r
 tidy_batting_percentages <- gather(yearly_bstats,statistic,average,ba_avg,slg_avg)
@@ -115,7 +115,7 @@ tidy_batting_percentages <- gather(yearly_bstats,statistic,average,ba_avg,slg_av
 ggplot(tidy_batting_percentages,aes(x = yearID,y = average,color = statistic)) + geom_line() + theme_wsj() 
 ```
 
-![plot of chunk unnamed-chunk-5](/figure/source/2016-05-29--baseball-things/unnamed-chunk-5-2.png) 
+![plot of chunk unnamed-chunk-4](/figure/source/2016-05-29--baseball-things/unnamed-chunk-4-2.png) 
 
 
 Batting Average vs league leader?
@@ -125,7 +125,7 @@ Batting Average vs league leader?
 ggplot(yearly_bstats,aes(x = yearID,y = ba_avg)) + geom_line() +stat_smooth(method = "lm") + theme_wsj() +ylim(.200,.450) +geom_point(data = yearly_bstats,aes(x=yearID,y=ba_leader_ba)) + theme_fivethirtyeight()
 ```
 
-![plot of chunk unnamed-chunk-6](/figure/source/2016-05-29--baseball-things/unnamed-chunk-6-1.png) 
+![plot of chunk unnamed-chunk-5](/figure/source/2016-05-29--baseball-things/unnamed-chunk-5-1.png) 
 
 ```r
 yearly_bstats$ba_max_spread <- yearly_bstats$ba_leader_ba - yearly_bstats$ba_avg
@@ -133,7 +133,7 @@ yearly_bstats$ba_max_spread <- yearly_bstats$ba_leader_ba - yearly_bstats$ba_avg
 ggplot(yearly_bstats,aes(x = yearID,y = ba_max_spread, label = ba_leader)) + geom_point() +stat_smooth() + theme_wsj() +ylim(0,.200)
 ```
 
-![plot of chunk unnamed-chunk-6](/figure/source/2016-05-29--baseball-things/unnamed-chunk-6-2.png) 
+![plot of chunk unnamed-chunk-5](/figure/source/2016-05-29--baseball-things/unnamed-chunk-5-2.png) 
 
 
 ```r
@@ -145,7 +145,7 @@ ggplot(yearly_bstats,aes(x = yearID,y = slg_avg)) + geom_line() +stat_smooth(met
 ## (geom_point).
 ```
 
-![plot of chunk unnamed-chunk-7](/figure/source/2016-05-29--baseball-things/unnamed-chunk-7-1.png) 
+![plot of chunk unnamed-chunk-6](/figure/source/2016-05-29--baseball-things/unnamed-chunk-6-1.png) 
 
 ```r
 yearly_bstats$max_slg_spread<- yearly_bstats$slg_leader_slg- yearly_bstats$slg_avg
@@ -153,7 +153,7 @@ yearly_bstats$max_slg_spread<- yearly_bstats$slg_leader_slg- yearly_bstats$slg_a
 ggplot(yearly_bstats,aes(x = yearID,y = max_slg_spread)) + geom_point() +stat_smooth(method = "lm") + theme_fivethirtyeight() +ylim(0,.500)
 ```
 
-![plot of chunk unnamed-chunk-7](/figure/source/2016-05-29--baseball-things/unnamed-chunk-7-2.png) 
+![plot of chunk unnamed-chunk-6](/figure/source/2016-05-29--baseball-things/unnamed-chunk-6-2.png) 
 
 
 
@@ -167,10 +167,10 @@ bstats <- bstats %>% filter(PA > 400) %>% mutate(std_away_ba = (BA - ba_avg)/ba_
 ggplot(yearly_bstats,aes(x=yearID,y=std_away_ba,label = ba_leader)) + geom_text()
 ```
 
-![plot of chunk unnamed-chunk-8](/figure/source/2016-05-29--baseball-things/unnamed-chunk-8-1.png) 
+![plot of chunk unnamed-chunk-7](/figure/source/2016-05-29--baseball-things/unnamed-chunk-7-1.png) 
 
 ```r
 ggplot(yearly_bstats,aes(x=yearID,y=std_away_slg,label = slg_leader)) + geom_text()
 ```
 
-![plot of chunk unnamed-chunk-8](/figure/source/2016-05-29--baseball-things/unnamed-chunk-8-2.png) 
+![plot of chunk unnamed-chunk-7](/figure/source/2016-05-29--baseball-things/unnamed-chunk-7-2.png) 
