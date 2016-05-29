@@ -79,7 +79,7 @@ bstats <- left_join(bstats,league_leaders, by = "yearID")
 ggplot(iso_league_leaders,aes(x= yearID,y = iso_leader_iso,label = iso_leader)) + geom_text()
 {% endhighlight %}
 
-![center](/figs/baseball_stuff/unnamed-chunk-3-1.png) 
+![center](/figs/2016-05-28-baseball-stuff/unnamed-chunk-3-1.png) 
 
 
 Include in stdev everyone with at least 200 at bats
@@ -109,7 +109,7 @@ ggplot(yearly_bstats,aes(x = yearID,y = ba_avg)) + geom_line() + theme_wsj() + s
                               '.280','.290','.300','.310'))
 {% endhighlight %}
 
-![center](/figs/baseball_stuff/unnamed-chunk-5-1.png) 
+![center](/figs/2016-05-28-baseball-stuff/unnamed-chunk-5-1.png) 
 
 {% highlight r %}
 tidy_batting_percentages <- gather(yearly_bstats,statistic,average,ba_avg,slg_avg)
@@ -118,7 +118,7 @@ tidy_batting_percentages <- gather(yearly_bstats,statistic,average,ba_avg,slg_av
 ggplot(tidy_batting_percentages,aes(x = yearID,y = average,color = statistic)) + geom_line() + theme_wsj() 
 {% endhighlight %}
 
-![center](/figs/baseball_stuff/unnamed-chunk-5-2.png) 
+![center](/figs/2016-05-28-baseball-stuff/unnamed-chunk-5-2.png) 
 
 
 Batting Average vs league leader?
@@ -128,7 +128,7 @@ Batting Average vs league leader?
 ggplot(yearly_bstats,aes(x = yearID,y = ba_avg)) + geom_line() +stat_smooth(method = "lm") + theme_wsj() +ylim(.200,.450) +geom_point(data = yearly_bstats,aes(x=yearID,y=ba_leader_ba)) + theme_fivethirtyeight()
 {% endhighlight %}
 
-![center](/figs/baseball_stuff/unnamed-chunk-6-1.png) 
+![center](/figs/2016-05-28-baseball-stuff/unnamed-chunk-6-1.png) 
 
 {% highlight r %}
 yearly_bstats$ba_max_spread <- yearly_bstats$ba_leader_ba - yearly_bstats$ba_avg
@@ -136,7 +136,7 @@ yearly_bstats$ba_max_spread <- yearly_bstats$ba_leader_ba - yearly_bstats$ba_avg
 ggplot(yearly_bstats,aes(x = yearID,y = ba_max_spread, label = ba_leader)) + geom_point() +stat_smooth() + theme_wsj() +ylim(0,.200)
 {% endhighlight %}
 
-![center](/figs/baseball_stuff/unnamed-chunk-6-2.png) 
+![center](/figs/2016-05-28-baseball-stuff/unnamed-chunk-6-2.png) 
 
 
 {% highlight r %}
@@ -150,7 +150,7 @@ ggplot(yearly_bstats,aes(x = yearID,y = slg_avg)) + geom_line() +stat_smooth(met
 ## (geom_point).
 {% endhighlight %}
 
-![center](/figs/baseball_stuff/unnamed-chunk-7-1.png) 
+![center](/figs/2016-05-28-baseball-stuff/unnamed-chunk-7-1.png) 
 
 {% highlight r %}
 yearly_bstats$max_slg_spread<- yearly_bstats$slg_leader_slg- yearly_bstats$slg_avg
@@ -158,7 +158,7 @@ yearly_bstats$max_slg_spread<- yearly_bstats$slg_leader_slg- yearly_bstats$slg_a
 ggplot(yearly_bstats,aes(x = yearID,y = max_slg_spread)) + geom_point() +stat_smooth(method = "lm") + theme_fivethirtyeight() +ylim(0,.500)
 {% endhighlight %}
 
-![center](/figs/baseball_stuff/unnamed-chunk-7-2.png) 
+![center](/figs/2016-05-28-baseball-stuff/unnamed-chunk-7-2.png) 
 
 
 
@@ -172,10 +172,10 @@ bstats <- bstats %>% filter(PA > 400) %>% mutate(std_away_ba = (BA - ba_avg)/ba_
 ggplot(yearly_bstats,aes(x=yearID,y=std_away_ba,label = ba_leader)) + geom_text()
 {% endhighlight %}
 
-![center](/figs/baseball_stuff/unnamed-chunk-8-1.png) 
+![center](/figs/2016-05-28-baseball-stuff/unnamed-chunk-8-1.png) 
 
 {% highlight r %}
 ggplot(yearly_bstats,aes(x=yearID,y=std_away_slg,label = slg_leader)) + geom_text()
 {% endhighlight %}
 
-![center](/figs/baseball_stuff/unnamed-chunk-8-2.png) 
+![center](/figs/2016-05-28-baseball-stuff/unnamed-chunk-8-2.png) 
