@@ -43,25 +43,46 @@ suppressWarnings(suppressMessages(expr={
 ```
 ### Overview
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+Going into the last day of the 1941 season, Ted Williams  was batting .39955 and offered the chance to sit out the final day of the season to ensure that he would finish the 13th ".400" season in Major League Baseball history. Instead, he played both games of a double-header against the Philadelphia Athletics, going 6 for 8 and finishing the season sitting at .406 over 456 at-bats. This made for a minor news story, (Williams even lost the MVP vote to Joe DiMaggio and his 56 game hitting streak) but it would likely have been a much bigger deal had anyone known that Williams just might have been the last player to ever accomplish the feat. 
+
+Over the first 40 years of modern baseball, 8 different men managed to break the .400 barrier. In the 74 seasons since, the closest anyone has come over a full season of play was George Brett, who hit .390 in 1980. While a simple explanation for this would be that Ted Williams was simply one of the greatest hitters ***of all***  time,  a more complete explanation is that he was one of the greatest hitters ***relative*** to his time. Batting average is not a solitary statistic, but one composed of the skill of not only the batter, but also the pitcher and fielders against whom he his playing. 
+
+Consider the following:
+
+
+Baseball glove, 1911. Ty Cobb leads the league at .420
+
+![](http://baseballhall.org/sites/default/files/styles/fullscreen_image_popup/public/externals/5431720de9843cd3dea7ccfdc78a601f.jpeg)
+
+Baseball glove, 1941, Ted Williams leads the league at .406
+![](http://baseballhall.org/sites/default/files/styles/fullscreen_image_popup/public/externals/a711549780dca6dccb18d1581f662715.jpeg)
+
+Baseball glove, 2015. Dee Gordon leads the league at .333
+![](http://ep.yimg.com/ay/nutosportsinc/wilson-a2000-series-outfield-glove-12-75in-wta20rb161799-2016-1.jpg)
 
 
 ### Data Summary
 
-I use the Lahman R package to access the Lahman database, pulling player-year level batting statistics from "Batting." The Lahman package also automatically computes several statistics for us such as batting average, on-base percentage, and slugging percentage that are missing from the main data set. Strangely, it is missing a field for singles, so we need to construct that on our own. I also filter to NL/AL batters with at least one plate appearance.
+I use the Lahman R package to access the Lahman database, pulling player-year level batting statistics from "Batting." The Lahman package also automatically computes several key statistics for us such as batting average, on-base percentage, and slugging percentage that are missing from the main data set. I subset the data to NL and AL players beginning with the AL inaugeral season, 1901. 
 
 
 ```{r}
 #Bring in available "advanced" batting stats
 bstats <- tbl_df(battingStats())
 
-#Add singles as a category
-bstats <- bstats %>% mutate(X1B = H - X2B - X3B - HR)
 
-#Filter to NL/AL Only
+#Filter to NL/AL Only, starting with AL inaugeral season in 1901
 bstats <- bstats %>% filter(lgID == "NL" | lgID =="AL",
                             yearID >= 1901,
                             PA > 0)
+
+```
+
+The dataset is missing two key stats that we will need, number of singles and Isolated Power (slugging % - batting average) 
+
+```{r}
+#Add singles as a category
+bstats <- bstats %>% mutate(X1B = H - X2B - X3B - HR)
 
 #Create ISO
 bstats$ISO = bstats$SlugPct - bstats$BA
