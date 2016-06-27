@@ -80,7 +80,7 @@ Between 1900 and 1950, the difference between the typical league leader and the 
 
 ###Redefining Greatness
 
-This brings me to my question: If we measure performance ***relative*** to one's time, how does the table of greatest seasons change? Who actually had the best seasons of all time when controlling for both the average of and variance in quality of play. Who stood the farthest away from their peers, in terms of standard deviation, in a given season? Below, I create a new table of the top 12 seasons of all time by the number of standard deviations their batting average was away from the league.
+This brings me to my central: If we measure performance ***relative*** to one's time not only in terms of average but ***also in terms of variance***, how does the table of greatest seasons change? Who stood the farthest away from their peers, in terms of standard deviation, in a given season? Below, I create a new table of the top 12 seasons of all time by the number of standard deviations their batting average was away from the league.
 
 
 
@@ -99,7 +99,7 @@ This brings me to my question: If we measure performance ***relative*** to one's
 |Ty Cobb        |                 3.536917|   1909|       0.377|
 |Ichiro Suzuki  |                 3.529257|   2004|       0.372|
 
-The .400 season is out. The 3.5 standard deviation season is in!
+The .400 season is out! The 3.5 standard deviation season is in!
 
 Overall, it does appear that our early twentieth century greats (Cobb, Hornsby, Sisler) benefited from both higher average environments of their time as well as a high level of variance in play.
 
@@ -122,6 +122,6 @@ As a final sanity check,  and one reason I like this method, compare the time di
 
 ![center](/figs/2016-06-25--Greatest_Seasons/unnamed-chunk-9-1.png) 
 
-By looking at standard deviations, we get a much more even spread of greatness over time,.. This seems more fare, and gives more justice to the fantastic seasons of Brett, Carew, Boggs, Bonds, and Ichiro. 
+By looking at standard deviations, we get a much more even spread of greatness over time. This seems more fair, and gives more justice to the fantastic seasons of Brett, Carew, Boggs, Bonds, and Ichiro. 
 
 [^1]: 1903 is the first year that both the NL and AL adopted the fouls-as strikes rule. Nap Lajoie was able to take advantage of unlimited foul balls in 1901 to hit .426

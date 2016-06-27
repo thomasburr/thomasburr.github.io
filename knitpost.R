@@ -8,4 +8,5 @@ KnitPost <- function(input, base.url = "/") {
   knit(input, envir = parent.frame())
 }
 
-KnitPost("2016-05-28-baseball-stuff.Rmd")
+setwd("/Users/Tom/github/_source")
+KnitPost("2016-06-25--Greatest_Seasons.Rmd")
