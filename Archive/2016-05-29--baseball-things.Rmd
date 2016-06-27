@@ -1,7 +1,8 @@
 ---
+title: "The Greatest Hitters of All Time"
+date: '2016-05-28'
 layout: post
-title:  "Baseball Analysis"
-date:   2016-05-28 22:28:01 -0500
+output: html_document
 categories: baseball
 ---
 
@@ -41,53 +42,75 @@ suppressWarnings(suppressMessages(expr={
 
 
 ```
-### Overview
 
-Going into the last day of the 1941 season, Ted Williams  was batting .39955 and offered the chance to sit out the final day of the season to ensure that he would finish the 13th ".400" season in Major League Baseball history. Instead, he played both games of a double-header against the Philadelphia Athletics, going 6 for 8 and finishing the season sitting at .406 over 456 at-bats. This made for a minor news story, (Williams even lost the MVP vote to Joe DiMaggio and his 56 game hitting streak) but it would likely have been a much bigger deal had anyone known that Williams just might have been the last player to ever accomplish the feat. 
+###Introduction
 
-Over the first 40 years of modern baseball, 8 different men managed to break the .400 barrier. In the 74 seasons since, the closest anyone has come over a full season of play was George Brett, who hit .390 in 1980. While a simple explanation for this would be that Ted Williams was simply one of the greatest hitters ***of all***  time,  a more complete explanation is that he was one of the greatest hitters ***relative*** to his time. Batting average is not a solitary statistic, but one composed of the skill of not only the batter, but also the pitcher and fielders against whom he his playing. 
-
-Consider the following:
-
-
-Baseball glove, 1911. Ty Cobb leads the league at .420
-
-![](http://baseballhall.org/sites/default/files/styles/fullscreen_image_popup/public/externals/5431720de9843cd3dea7ccfdc78a601f.jpeg)
-
-Baseball glove, 1941, Ted Williams leads the league at .406
-![](http://baseballhall.org/sites/default/files/styles/fullscreen_image_popup/public/externals/a711549780dca6dccb18d1581f662715.jpeg)
-
-Baseball glove, 2015. Dee Gordon leads the league at .333
-![](http://ep.yimg.com/ay/nutosportsinc/wilson-a2000-series-outfield-glove-12-75in-wta20rb161799-2016-1.jpg)
-
-
-### Data Summary
-
-I use the Lahman R package to access the Lahman database, pulling player-year level batting statistics from "Batting." The Lahman package also automatically computes several key statistics for us such as batting average, on-base percentage, and slugging percentage that are missing from the main data set. I subset the data to NL and AL players beginning with the AL inaugeral season, 1901. 
-
+Who were the greatest hitters of all time? Who had the best seasons? Is it finding out as easy as this?
 
 ```{r}
-#Bring in available "advanced" batting stats
+#Import bstats from the Lahman dataset, using the Lahman R package
 bstats <- tbl_df(battingStats())
 
+#Filter to the Modern Era, NL and AL Only
+bstats <- bstats %>% filter(yearID > 1900 & lgID %in% c("NL","AL"))
 
-#Filter to NL/AL Only, starting with AL inaugeral season in 1901
-bstats <- bstats %>% filter(lgID == "NL" | lgID =="AL",
-                            yearID >= 1901,
-                            PA > 0)
+#Collect player names from Master Dataset, then merge on bstats
+master <- tbl_df(Master) %>% select(playerID,nameFirst,nameLast)
+bstats <- full_join(bstats,master,by = "playerID")
 
+#Qualifications: Must have at least 400 plate appearances
+
+greatest_seasons <- bstats %>% filter(PA > 400) %>% 
+                               arrange(desc(BA)) %>% 
+                               select(nameFirst,nameLast,BA,yearID)
+
+#Pretty display with kable
+kable(greatest_seasons[1:15,],caption = "Top 10 Batting Seasons in History")
 ```
 
-The dataset is missing two key stats that we will need, number of singles and Isolated Power (slugging % - batting average) 
+Baseball's finest hour has passed! There hasn't been a .400 hitter since 1941, and 9 of the ten top seasons happened before 1925! They just don't make 'em like Nap Lajoie anymore!
+
+Obviously this argument doesn't hold up. Batting average is not a solitary statistic, but one composed of the skill of not only the batter, but also the pitcher and fielders against whom he his playing. 
+
+For a simple explanation, here is  Ty Cobb's glove from his 1911 .420 season:
+
+
+<div style="width:300px; height=200px;margin: auto">
+![](http://baseballhall.org/sites/default/files/styles/fullscreen_image_popup/public/externals/5431720de9843cd3dea7ccfdc78a601f.jpeg)
+</div>
+
+
+For a more complex treatment, here is what evolutionary biologist Stephen Gould has to say on the supposed "disappearance" of the .400 hitter:
+
+
+> The overall batting average has been about .260 throughout the history of baseball. But the variation around that average has shrunk. It's at least plausible that variation declines because play improves. A batting average is a comparison between hitting and pitching. So if everybody's improving, as long as they improve at the same rate, the batting average will remain constant. But it gets to the point where everyone is so good that there's just not much variation anymore. Hitting .400 in baseball is a good example because there's a "right wall," if you will, of human limits. Given how our muscles work, there's just so much that the human body can do. There will always be a few individuals who, by dint of genetic gifts and obsessive commitment and training, will stand close to that right wall. That's where Ty Cobb was in 1911 and where Tony Gwynn is today. But there is this limiting wall. What has happened in baseball is that all aspects of play have improved enormously. Back in 1911, average play was so far inferior to where Ty Cobb was that his batting average could be measured as .420. Today, Tony Gwynn is just as good, maybe even closer to the wall than Cobb was. But the average player has improved so much that Gwynn's performance -- equal to or better than Cobb's -- is not measured as high.
+
+In sum: It should be obvious that player performance has improved over time. The reason we don't see .400 hitters anymore is that as players colelctively approach the right limit of human achivement, variation shrinks. Cobb and Hornsby were able to put up such gaudy numbers because they were simply closer to this point before everyone else caught up.
+
+This brings me to my question: If we measure performance ***relative*** to one's time, how does the above table change? Who actually had the best, or perhaps more accurately ***transcendant*** seasons of all time?
+
+###The Greatest Hitting Seasons
+
+First, I would like to test Gould's central claim:
+
+> The overall batting average has been about .260 throughout the history of baseball. But the variation around that average has shrunk." 
+
+To test that claim, I look at the league-level batting average for players who hat at least 400 plate apperances in a season.
 
 ```{r}
-#Add singles as a category
-bstats <- bstats %>% mutate(X1B = H - X2B - X3B - HR)
+yearly_bstats <- bstats %>% filter(PA > 400) %>%
+                            group_by(yearID) %>%
+                            summarize(ba_avg = mean(BA),
+                                      num_qualified = n())
 
-#Create ISO
-bstats$ISO = bstats$SlugPct - bstats$BA
+ggplot(yearly_bstats,aes(x = yearID,y = ba_avg)) + geom_line() + theme_wsj() + scale_y_continuous(breaks = c(.240,.250,.260,.270,.280,.290,.300,.310),
+                   labels = c('.240','.250','.260','.270',
+                              '.280','.290','.300','.310'))
 
 ```
+
+To a first approximation, Gould's claim appears to be a bit of an overstatement. In the modern era, batting averages for qualified hitters have a range of over 50 points. Of our list of .400 hitters, all but one of them (Ted Williams) accomplished this feat in a season where the league batting average was over .280. 
+
 
 For each year, we would like to know who the league leaders were in batting average (AVG), slugging percentage (SLG), and isolated power (ISO). For ease of computation, I also save each leader's numbers for all 3 categories. This, for example, will allow us to see how the ISO has changed over time for the typical batting average leader. 
 
@@ -99,8 +122,7 @@ ba_league_leaders <- bstats %>% filter(PA > 400 | AB > 500) %>%
                                 select(ba_leader = playerID,
                                        yearID,
                                        ba_leader_ba = BA,
-                                       ba_leader_slg = SlugPct,
-                                       ba_leader_iso = ISO)
+                                       ba_leader_slg = SlugPct)
 
 slg_league_leaders <- bstats %>% filter(PA > 400 | AB > 500) %>% 
                                  group_by(yearID) %>% 
@@ -109,33 +131,20 @@ slg_league_leaders <- bstats %>% filter(PA > 400 | AB > 500) %>%
                                  select(slg_leader = playerID,
                                         yearID,
                                         slg_leader_slg = SlugPct,
-                                        slg_leader_ba = BA,
-                                        slg_leader_iso = ISO)
-
-iso_league_leaders <- bstats %>% filter(PA > 400 | AB > 500) %>% 
-                                 group_by(yearID) %>% 
-                                 slice(which.max(ISO)) %>% 
-                                 ungroup() %>% 
-                                 select(iso_leader = playerID,
-                                        yearID,
-                                        iso_leader_slg = SlugPct,
-                                        iso_leader_ba = BA,
-                                        iso_leader_iso = ISO)
+                                        slg_leader_ba = BA)
 
 league_leaders <- merge(ba_league_leaders,slg_league_leaders,by = "yearID")
-league_leaders <- merge(league_leaders,iso_league_leaders,by = "yearID")
 
 
 bstats <- left_join(bstats,league_leaders, by = "yearID")
 
-ggplot(iso_league_leaders,aes(x= yearID,y = iso_leader_iso,label = iso_leader)) + geom_text()
+ggplot(ba_league_leaders,aes(x= yearID,y = ba_leader_ba,label = ba_leader)) + geom_text()
 ```
 
 
 Include in stdev everyone with at least 200 at bats
 
 ```{r}
-try (detach('package:plyr'))
 yearly_bstats <- bstats %>% filter(PA > 400)
 yearly_bstats <- yearly_bstats %>% group_by(yearID) %>% summarise(
                                               num_qualified = n(),
