@@ -21,7 +21,7 @@ categories: baseball
 
 
 # libraries:
-librariesToLoad <- c( 'plyr','tidyr','rmarkdown', 'knitr','ggplot2',
+librariesToLoad <- c( 'plyr','tidyr', 'knitr','ggplot2',
                      'scales','ggthemes','Lahman','dplyr',
                      'gridExtra')
 
