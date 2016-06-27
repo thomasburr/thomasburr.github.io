@@ -9,7 +9,7 @@ categories: baseball
 
 
 
-###Introduction
+##Introduction
 
 Going into the last day of the 1941 season, Ted Williams was sitting on a .39955 average and well clear of the 400 at-bats needed to qualify for the major league batting title. By sitting out, he would have been the first major league player to break the .400 barrier since Bill Terry in 1930. Instead, he played both games of a double header going 6 for 8 and finishing with a .406 average, good for  7th best in the modern era. While this made minor news, it would have been a much bigger deal if anyone could have guessed he would be the last player to do so in 74 years and counting.
 
@@ -43,7 +43,7 @@ A more reasonable explanation could be that pitchers and fielders have simply im
 
 In sum: It should be obvious that player performance has improved over time in all aspects -- hitting, pitching, and fielding. The reason we don't see .400 hitters anymore is not that players have gotten worse, or even that pitchers have gotten better faster than hitters. It's that as players collectively approach the right limit of human achievement in all aspects of the game, variation shrinks. Cobb and Hornsby were able to put up such gaudy numbers because they were simply closer to this point before everyone else caught up.
 
-###Evaluating Gould's Hypothesis
+##Evaluating Gould's Hypothesis
 
 First, I would like to test Gould's central argument:
 
@@ -78,7 +78,7 @@ Hard to say initially, but it does appear that league fall faster between 1900 a
 
 Between 1900 and 1950, the difference between the typical league leader and the league average fell by about 50 points.
 
-###Redefining Greatness
+##Redefining Greatness
 
 This brings me to my central: If we measure performance ***relative*** to one's time not only in terms of average but ***also in terms of variance***, how does the table of greatest seasons change? Who stood the farthest away from their peers, in terms of standard deviation, in a given season? Below, I create a new table of the top 12 seasons of all time by the number of standard deviations their batting average was away from the league.
 
