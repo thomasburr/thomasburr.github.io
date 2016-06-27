@@ -103,7 +103,7 @@ The .400 season is out! The 3.5 standard deviation season is in!
 
 Overall, it does appear that our early twentieth century greats (Cobb, Hornsby, Sisler) benefited from both higher average environments of their time as well as a high level of variance in play.
 
-####Biggest Winners:
+#### Biggest Winners:
 
 **Rod Carew and George Brett:** The only players to break the 4.0 standard deviation barrier in baseball history. Well-known to baseball fans, but certainly not household names on the level of Ted Williams or Ty Cobb.
     
@@ -111,7 +111,7 @@ Overall, it does appear that our early twentieth century greats (Cobb, Hornsby, 
 
 **Wade Boggs:** Wade Boggs ends up cracking the list not once but twice, with relatively pedestrian .366 and .368 averages. 
     
-####Greatest Losers 
+#### Greatest Losers 
 
 **George Sisler, Ty Cobb, Rogers Hornsby:**
 
